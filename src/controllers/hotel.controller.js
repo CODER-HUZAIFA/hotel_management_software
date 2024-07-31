@@ -24,7 +24,7 @@ const hotelHandler = async (req, res) => {
 const hotelRoomHandler = async (req, res) => {
     const owner = tokenVerify(req.cookies.uid)
     if(!owner) return res.send("Error");
-
+    //
     const hotel = await Hotel.findOne({ _id: req.params.hotelId })
     await client.del(`user:${hotel.owner}:hotel:${hotel._id}`)
 
