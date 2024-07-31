@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Edit User</title>
+</head>
+<body>
+    <nav class="w-full h-20 bg-slate-800 flex items-center justify-between text-white z-30 shadow-md shadow-slate-500 fixed top-0">
+        <div class="logo text-3xl font-medium ml-12">Hotel Management</div>
+        <div class="name text-xl mr-8 flex items-center"><a href="/user/<%= user._id %>"><%= user.fullName %></a>
+            <img src="../../images/image.png" alt="Error" class="w-[50px] ml-4 rounded-full">
+        </div>
+    </nav>
+    <main class="w-screen h-screen border-2 border-black pt-24">
+        <div class="w-full h-full flex justify-center gap-24">
+            <form action="/user/<%= user._id %>/edit" method="post" enctype="application/x-www-form-urlencoded" class="w-[400px] h-[450px] bg-slate-200 rounded flex flex-col px-2 py-3">
+                <div class="w-full text-2xl text-center font-bold">
+                    <p>Edit Your Information</p>
+                </div>
+                <div class="w-full py-5 mt-4 px-2 flex flex-col gap-4">
+                    <div class="flex gap-3">
+                        <p class="font-medium">Your username: </p>
+                        <input type="text" name="username" required autocomplete="off" value="<%= user.username %>" class="rounded px-1 py-[2px] font-semibold">
+                    </div>
+                    <div class="flex gap-3">
+                        <p class="font-medium">Your Full Name: </p>
+                        <input type="text" name="fullName" required autocomplete="off" value="<%= user.fullName %>" class="rounded px-1 py-[2px] font-semibold">
+                    </div>
+                    <div class="flex gap-3">
+                        <p class="font-medium">Your email: </p>
+                        <input type="text" name="email" required autocomplete="off" value="<%= user.email %>" class="rounded px-1 py-[2px] font-semibold">
+                    </div>
+                    <div class="flex gap-3">
+                        <p class="font-medium">Your Age: </p>
+                        <input type="text" name="age" required autocomplete="off" value="<%= user.age %>" class="rounded px-1 py-[2px] font-semibold">
+                    </div>
+                    <div class="w-full flex justify-center  ">
+                        <button type="submit" class="px-2 py-1 bg-red-500 text-white font-medium rounded">Submit</button>
+                    </div>
+                </div>
+            </form>
+            <form action="/user/<%= user._id %>/edit/password" method="post" enctype="application/x-www-form-urlencoded" class="w-[400px] h-[450px] bg-slate-200 rounded flex flex-col px-2 py-3">
+                <div class="w-full text-2xl text-center font-bold">
+                    <p>Change your Pasword</p>
+                </div>
+                <div class="w-full py-5 mt-4 px-2 flex flex-col gap-4">
+                    <div class="flex gap-3">
+                        <p class="font-medium">Old Password: </p>
+                        <input type="text" name="old" required autocomplete="off" class="rounded px-1 py-[2px] font-semibold">
+                    </div>
+                    <div class="flex gap-3">
+                        <p class="font-medium">New Password: </p>
+                        <input type="text" name="new" required autocomplete="off" class="rounded px-1 py-[2px] font-semibold">
+                    </div>
+                    <div class="w-full flex justify-center  ">
+                        <button type="submit" class="px-2 py-1 bg-red-500 text-white font-medium rounded">Change Password</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </main>
+</body>
+</html>

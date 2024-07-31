@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Rooms Managing</title>
+</head>
+
+<body>
+    <nav
+        class="w-full h-20 bg-slate-800 flex items-center justify-between text-white z-30 shadow-md shadow-slate-500 fixed top-0">
+        <div class="flex items-center">
+            <p class="logo text-3xl font-medium ml-12">Hotel Management</p>
+        </div>
+        <div class="name text-xl mr-8 flex items-center">
+            <div>
+                <p class="hover:underline cursor-pointer font-medium">
+                    <a href="/user/<%= user._id %>/hotel/<%= hotel._id %>/dashboard"><%= hotel.name %></a>
+                </p>
+                <p class="text-xs text-gray-400">
+                    <a href="/user/<%= user._id %>">
+                        <%= user.fullName %>
+                    </a>
+                </p>
+            </div>
+            <img src="../../../../../../images/image.png" alt="Error" class="w-[50px] ml-4 rounded-full">
+        </div>
+    </nav>
+    <main class="main w-screen h-screen flex">
+        <div class="w-1/2 h-full bg-slate-800 flex flex-col items-center pt-24">
+            <div class="text-white font-bold text-3xl mt-3">
+                <p>Rooms Details</p>
+            </div>
+            <div class="w-full h-full mt-4 py-3 px-5">
+                <div class="flex items-center text-white mb-3">
+                    <p class="text-white font-medium text-2xl">Room Number:</p>
+                    <div
+                        class="w-16 h-7 bg-white text-black font-semibold flex flex-col items-center justify-center ml-3 mt-1 rounded-md">
+                        <%= room.roomNumber %>
+                    </div>
+                </div>
+                <div class="flex items-center text-white mb-3">
+                    <p class="text-white font-medium text-2xl">Room Capacity:</p>
+                    <div
+                        class="px-3 h-7 bg-white text-black font-semibold flex flex-col items-center justify-center ml-3 mt-1 rounded-md">
+                        <%= room.capacity %> Persons
+                    </div>
+                </div>
+                <div class="flex items-center text-white mb-3">
+                    <p class="text-white font-medium text-2xl">Room Price:</p>
+                    <div
+                        class="px-3 h-7 bg-white text-black font-semibold flex gap-1 items-center ml-3 mt-1 rounded-md">
+                        <%= room.price %> Price per Night <span class="text-red-500"> + <%= room.price * 0.05 %> GST</span>
+                    </div>
+                </div>
+                <div class="flex items-center text-white mb-3">
+                    <p class="text-white font-medium text-2xl">Total Amount:</p>
+                    <div
+                        class="px-3 h-7 bg-white text-black font-semibold flex flex-col items-center justify-center ml-3 mt-1 rounded-md">
+                        <%= room.price * 0.05 + room.price %>
+                    </div>
+                </div>                                                     
+                <div class="flex items-center text-white mb-3">
+                    <p class="text-white font-medium text-2xl">Room Type:</p>
+                    <div
+                        class="px-3 h-7 bg-white text-black font-semibold flex flex-col items-center justify-center ml-3 mt-1 rounded-md">
+                        <%= room.type %>
+                    </div>
+                </div>
+                
+                <% if(room.customer) { %>
+                    <div class="flex items-center text-white mb-3">
+                        <p class="text-white font-medium text-2xl">Time:</p>
+                        <div id="time"
+                            class="px-3 h-7 bg-white text-black font-semibold flex flex-col items-center justify-center ml-3 mt-1 rounded-md">
+                            HH/MM
+                        </div>
+                    </div>
+                <% } %>
+                <div>
+                    <% if(room.availability=="Available" ) { %>
+                        <div
+                            class="w-36 h-7 bg-green-400 text-white text-md font-medium rounded-md flex items-center justify-center mt-[5px]">
+                            <p>Available</p>
+                        </div>
+                    <% } else { %>
+                        <div
+                            class="w-36 h-7 bg-red-500 text-white flex text-md items-center rounded-md font-medium justify-center mt-[5px]">
+                            <p>Not Available</p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <% if(!room.customer) { %>
+            <div class="w-1/2 h-full bg-slate-200 pt-24 flex flex-col items-center">
+                <div>
+                    <h3 class="text-black font-bold text-3xl mt-3">Room Booking</h3>
+                </div>
+                <form action="/user/<%= user._id %>/hotel/<%= hotel._id %>/room/<%= room._id %>/room_booking" method="post"
+                    class="w-full h-full mt-4 px-4 pt-3 flex flex-wrap justify-between bg-white">
+                    <div class="">
+                        <div class="mb-3">
+                            <label for="name" class="text-lg font-medium">Enter customer Name:</label> <br>
+                            <input type="text" name="name" id="name" required autocomplete="off"
+                                class="w-64 py-[2px] bg-slate-200 bg-opacity-70 border-[1px] border-slate-400 px-1 rounded focus:outline-none focus:rounded-sm transition-all">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="text-lg font-medium">Enter customer email:</label> <br>
+                            <input type="email" name="email" id="email" required autocomplete="off"
+                                class="w-64 py-[2px] bg-slate-200 bg-opacity-70 border-[1px] border-slate-400 px-1 rounded focus:outline-none focus:rounded-sm transition-all">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mb-3">
+                            <label for="number" class="text-lg font-medium">Enter phone number Number:</label> <br>
+                            <input type="number" name="number" id="number" required autocomplete="off"
+                                class="w-64 py-[2px] bg-slate-200 bg-opacity-70 border-[1px] border-slate-400 px-1 rounded focus:outline-none focus:rounded-sm transition-all">
+                        </div>
+                        <div class="mb-3">
+                            <label for="person" class="text-lg font-medium">Enter person Number:</label> <br>
+                            <input type="number" name="person" id="person" required autocomplete="off"
+                                class="w-64 py-[2px] bg-slate-200 bg-opacity-70 border-[1px] border-slate-400 px-1 rounded focus:outline-none focus:rounded-sm transition-all">
+                        </div>
+                    </div>
+                    <div class="mb-28">
+                        <div class="mb-3">
+                            <label for="settle" class="text-lg font-medium">Enter Settlement Amount:</label> <br>
+                            <input type="number" name="settle" id="number" required autocomplete="off"
+                                class="w-64 py-[2px] bg-[#ff00003b] border-[1px] border-[#ff0000] px-1 rounded focus:outline-none focus:rounded-sm transition-all">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit"
+                                class="px-2 py-1 bg-[#ff0000] text-white font-semibold rounded">Settle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        <% } else { %>
+            <div class="w-1/2 h-full bg-slate-200 pt-24 flex flex-col items-center">
+                <h1 class="text-3xl px-1 py-[2px] bg-red-500 rounded text-white font-bold text-center ">Room is not available</h1>
+                <div class="border-black border-t mt-2 w-full h-full">
+                    <div class="text-xl font-bold text-red-600 my-2 flex items-center justify-center">Customer Details</div>
+                    <div class="customer-details pt-2 px-3 flex gap-3 flex-col w-full">
+                        <div class="flex">
+                            <p class="text-lg font-medium mr-2">Customer Name:</p>
+                            <div class="border-black border-[1px] font-medium bg-white rounded px-2 w-52 overflow-hidden whitespace-nowrap text-ellipsis" title="<%= room.customer.name%>"><%= room.customer.name %></div>
+                        </div>
+                        <div class="flex">
+                            <p class="text-lg font-medium mr-2">Customer Email:</p>
+                            <div class="border-black border-[1px] font-medium bg-white rounded px-2 w-52 overflow-hidden whitespace-nowrap text-ellipsis" title="<%= room.customer.email%>"><%= room.customer.email %></div>
+                        </div>
+                        <div class="flex">
+                            <p class="text-lg font-medium mr-2">Customer Mobile Number:</p>
+                            <div class="border-black border-[1px] font-medium bg-white rounded px-2 w-40 overflow-hidden whitespace-nowrap text-ellipsis" title="<%= room.customer.phoneNumber %>">+91 <%= room.customer.phoneNumber %></div>
+                        </div>
+                        <div class="flex">
+                            <p class="text-lg font-medium mr-2">Persons:</p>
+                            <div class="border-black border-[1px] font-medium bg-white rounded px-2 w-7 overflow-hidden whitespace-nowrap text-ellipsis" title="<%= room.customer.persons %>"><%= room.customer.persons%></div>
+                        </div>
+                        
+                        <div class="flex">
+                            <p class="text-lg font-medium mr-2">Check In Time:</p>
+                            <div class="border-black border-[1px] font-medium bg-white rounded px-2 w-[200px] overflow-hidden whitespace-nowrap text-ellipsis" title="<%= room.customer.checkIn %>"><%= room.customer.checkIn.toLocaleString() %></div>
+                        </div>
+                        <div class="flex">
+                            <p class="text-lg font-medium mr-2">Payed Amount:</p>
+                            <div class="border-black border-[1px] font-medium bg-white text-red-500 rounded px-2 w-[70px] overflow-hidden whitespace-nowrap text-ellipsis" title="<%= room.customer.settlementAmount %>"><%= room.customer.settlementAmount %></div>
+                        </div>
+                        <div class="checkout">
+                            <button id="checkout" class="px-2 py-[2px] bg-red-500 text-white font-medium rounded cursor-pointer">CheckOut</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Check Out -->
+            <div id="checkoutScreen" style="display: none;" class="w-screen h-screen absolute bg-black bg-opacity-[0.4] z-50 flex items-center justify-center transition-all">
+                <div class="w-[300px] h-[220px] bg-white rounded-md flex items-center pt-8 flex-col">
+                    <p class="text-2xl font-semibold">Are you Sure?</p>
+                    <div class="w-full flex justify-center mt-4 my-2 px-2 py-2">
+                        <div class="flex gap-2">
+                            <p class="text-lg font-semibold">Remaining Payment:</p>
+                            <div class="bg-slate-200 border border-black px-2 py-1 rounded font-medium text-red-500"><%= (room.price * 0.05 + room.price) - room.customer.settlementAmount %></div>
+                        </div>
+                    </div>
+                    <div class="w-full py-1 mt-3 flex items-center justify-center gap-[50px]">
+                        <button id="checkoutCancel" class="px-2 py-1 w-[100px] rounded-sm font-medium bg-slate-200 focus:bg-slate-300">Cancel</button>
+                        <button form="checkoutForm" class="px-2 py-1 w-[100px] rounded-sm font-medium bg-red-500 text-white focus:bg-red-600">Yes</button>
+                        <form id="checkoutForm" method="post" action="/user/<%= user._id %>/hotel/<%= hotel._id %>/room/<%= room._id %>/checkout" style="display: none;"></form>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </main>
+    <script>
+        <% if (room && room.customer && room.customer.checkIn) { %>
+            function updateTime() {
+
+                const checkInTime = new Date(`<%= room.customer.checkIn %>`)
+                const now = Date.now();
+                const diffInMillis = now - checkInTime
+
+                // Convert milliseconds to seconds
+                const diffInSeconds = Math.floor(diffInMillis / 1000);
+
+                // Calculate days, hours, minutes, and seconds
+                const days = Math.floor(diffInSeconds / (24 * 3600));
+                const hours = Math.floor((diffInSeconds % (24 * 3600)) / 3600);
+                const minutes = Math.floor((diffInSeconds % 3600) / 60);
+                const seconds = diffInSeconds % 60;
+                const finalTime = `${hours}/${minutes}`
+
+                document.querySelector("#time").innerText = finalTime;
+            };
+
+            setInterval(updateTime, 1000);
+        <% } else { %>
+        <% } %>;
+        
+        const checkoutScreen = document.querySelector("#checkoutScreen")
+        const checkoutCancel = document.querySelector("#checkoutCancel")
+
+        document.querySelector("#checkout").addEventListener("click", function(){
+            checkoutScreen.style.display = "flex";
+        });
+        checkoutCancel.addEventListener("click", function(){
+            checkoutScreen.style.display = "none";
+        })
+        
+    </script>
+</body>
+
+</html>
